@@ -1,0 +1,55 @@
+Ex. 1 C# class
+public class PhoneNumber 
+{
+   public string type;
+   public string number;
+}
+
+public class Contact
+{
+   public string firstName;
+   public string lastName;
+   public bool isAlive;
+   public int age;
+   public PhoneNumber[] phoneNumbers;
+   public Children children;
+   public Contact spouse;   
+}
+
+
+Ex 2. json request
+
+[
+	{
+		"StudentId": 101,
+		"Name": "Steve",
+		"Courses": [
+			{
+				"CourseId": 101,
+				"Name": "C#"
+			},
+			{
+				"CourseId": 201,
+				"Name": "Advanced C#"
+			}
+		]
+	},
+	{
+		"StudentId": 201,
+		"Name": "Dave"
+	}
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
