@@ -4,34 +4,38 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using HelloWorldService.Models;
 
 namespace HelloWorldService.Controllers
 {
     public class ContactsController : ApiController
     {
-        // GET api/contacts
-        public IEnumerable<string> Get()
+        public static List<Contact> contacts = new List<Contact>();
+
+        // GET: api/Contacts
+        public IEnumerable<Contact> Get()
         {
-            return new string[] { "dan", "steve" };
+            return contacts;
         }
 
-        // GET api/contacts/5
-        public string Get(int id)
+        // GET: api/Contacts/5
+        public Contact Get(int id)
         {
-            return "value";
+            return null;
         }
 
-        // POST api/contacts
-        public void Post([FromBody]string value)
+        // POST: api/Contacts
+        public void Post([FromBody]Contact value)
+        {
+            contacts.Add(value); // This will add the contact to the list
+        }
+
+        // PUT: api/Contacts/5
+        public void Put(int id, [FromBody]Contact value)
         {
         }
 
-        // PUT api/contacts/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/contacts/5
+        // DELETE: api/Contacts/5
         public void Delete(int id)
         {
         }
