@@ -21,23 +21,37 @@ namespace HelloWorldService.Controllers
         // GET: api/Contacts/5
         public Contact Get(int id)
         {
-            return null;
+            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            return contact;
         }
+
+        static int nextId = 101;
 
         // POST: api/Contacts
         public void Post([FromBody]Contact value)
         {
+            value.Id = nextId++;
+
             contacts.Add(value); // This will add the contact to the list
         }
 
         // PUT: api/Contacts/5
         public void Put(int id, [FromBody]Contact value)
         {
+            var contact = contacts.SingleOrDefault(t => t.Id == id);
+
+            if (contact != null)
+            {
+                contact.Name = value.Name;
+                contact.Phones = value.Phones;
+                contact.DateAdded = value.DateAdded;
+            }
         }
 
         // DELETE: api/Contacts/5
         public void Delete(int id)
         {
+            contacts.RemoveAll(t => t.Id == id);
         }
     }
 }
