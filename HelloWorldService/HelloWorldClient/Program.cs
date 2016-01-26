@@ -75,6 +75,10 @@ namespace HelloWorldClient
                 Console.WriteLine("Id={0} Name={1}", item.Id, item.Name);
             }
 
+            // Delete
+            var deleteResult = client.DeleteAsync("contacts/" + list[0].Id).Result;
+            Console.WriteLine("Delete result={0}", deleteResult.StatusCode);
+
             Console.ReadLine();
         }
     }
