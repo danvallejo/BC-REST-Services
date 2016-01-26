@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,6 +15,8 @@ namespace HelloWorldService.Controllers
         // GET: api/Contacts
         public IEnumerable<Contact> Get()
         {
+            //int x = 1;
+            //x = x / (x - 1);
             return contacts;
         }
 

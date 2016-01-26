@@ -1,0 +1,2 @@
+1/25/2016 8:35:08 PM : Elapsed=00:00:16.1539206
+1/25/2016 8:36:18 PM : Elapsed=00:00:11.49311051/25/2016 8:37:58 PM : Elapsed=00:00:01.4061945 Url=http://localhost/HelloWorldService/api/contacts/51/25/2016 8:38:57 PM : Elapsed=00:00:34.5455632 Url=http://localhost/HelloWorldService/api/contacts/5
