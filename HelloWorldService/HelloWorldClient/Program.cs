@@ -43,7 +43,8 @@ namespace HelloWorldClient
         static void Main(string[] args)
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost.fiddler/helloworldservice/api/");
+            client.BaseAddress = new Uri("http://localhost/helloworldservice/api/");
+            client.DefaultRequestHeaders.Add("Api-Key", "value");
 
             var newContact = new Contact
             {
@@ -79,7 +80,24 @@ namespace HelloWorldClient
             var deleteResult = client.DeleteAsync("contacts/" + list[0].Id).Result;
             Console.WriteLine("Delete result={0}", deleteResult.StatusCode);
 
+            var score = new NewScore {
+                myPlayer= "Mike",
+                myScore= 501
+            };
+
+            var parseClient = new ParseClient();
+
+            var posted = parseClient.Post("AnotherSetOfScores", score);
+
+            var getted = parseClient.Get<NewScore>("AnotherSetOfScores", posted.Id);
+
             Console.ReadLine();
+        }
+
+        class NewScore
+        {
+            public string myPlayer;
+            public int myScore;
         }
     }
 }

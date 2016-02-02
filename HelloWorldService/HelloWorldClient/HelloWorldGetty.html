@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        window.onload = function () {
+            GetContacts();
+        }
+        var appendApiKeyHeader = function (xhr) {
+            xhr.setRequestHeader('Api-Key', 'eq6d2sg7sqb2mkcbnh3ch3g3')
+        }
+        function GetContacts() {
+            $.ajax({
+                type: "GET",
+                beforeSend: appendApiKeyHeader,
+                url: 'https://api.gettyimages.com:443/v3/search/images?phrase=dogs'
+            })
+          .success(function (data, textStatus, jqXHR) {
+              var content = $('#body')
+              content.empty()
+
+              for (var c = 0; c < data.images.length; c++) {
+                  var image = data.images[c]
+                  content.append('<img src="' + image.display_sizes[0].uri + '"/>')
+                  content.append('<p>' + image.title +'</p>')
+              }
+          })
+          .fail(function (data, err) {
+              alert('fail')
+          });
+        }
+    </script>
+</head>
+<body>
+    <div id="body">
+        Loading images...
+    </div>
+</body>
+</html>
