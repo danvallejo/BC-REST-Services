@@ -11,9 +11,15 @@ namespace HelloWorldService.Models
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        /// <summary>
+        /// This is the name field
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// This is the date added field
+        /// </summary>
         [JsonProperty("date_added", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public DateTime DateAdded { get; set; }
 

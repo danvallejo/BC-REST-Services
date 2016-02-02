@@ -8,11 +8,18 @@ using Newtonsoft.Json;
 
 namespace HelloWorldService.Controllers
 {
+    /// <summary>
+    /// This is the Contacts API
+    /// </summary>
     public class ContactsController : ApiController
     {
         public static List<Contact> contacts = new List<Contact>();
 
         // GET: api/Contacts
+        /// <summary>
+        /// This is the get function
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Contact> Get()
         {
             //int x = 1;
