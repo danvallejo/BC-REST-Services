@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        window.onload = function () {
+            GetContacts();
+        }
+        var appendApiKeyHeader = function (xhr) {
+            xhr.setRequestHeader('Api-Key', 'TBD')
+        }
+        function GetContacts() {
+            $.ajax({
+                type: "GET",
+                beforeSend: appendApiKeyHeader,
+                url: 'http://localhost/helloworldservice/api/contacts'
+            })
+          .success(function (data, textStatus, jqXHR) {
+              var content = $('#body')
+              content.empty()
+              for (var c = 0; c < data.length; c++) {
+                  var contact = data[c]
+                  content.append('<p>' + contact.id + ' : ' + contact.name + ' : ' + contact["date_added"] + '</p>')
+
+                  for (var p = 0; p < contact.phones.length; p++) {
+                      content.append('<p>' + contact.phones[p].number + ' : ' + contact.phones[p].phone_type + '</p>')
+                  }
+              }
+          })
+          .fail(function (data, err) {
+              alert('fail')
+          });
+        }
+    </script>
+</head>
+<body>
+    <div id="body">
+        Loading contacts...
+    </div>
+</body>
+</html>

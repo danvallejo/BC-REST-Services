@@ -11,6 +11,7 @@ namespace HelloWorldService.Controllers
     /// <summary>
     /// This is the Contacts API
     /// </summary>
+    [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ContactsController : ApiController
     {
         public static List<Contact> contacts = new List<Contact>();
