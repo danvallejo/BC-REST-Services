@@ -16,6 +16,7 @@ namespace HelloWorldService
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            // TODO: Delete after you convert everything to RouteAttribute()
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

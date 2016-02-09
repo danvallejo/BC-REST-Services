@@ -12,10 +12,12 @@ namespace HelloWorldService.Controllers
     /// This is the Contacts API
     /// </summary>
     [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
-    [Authenticator]
+   // [Authenticator]
+    [RoutePrefix("router")]
     public class ContactsController : ApiController
     {
         public static List<Contact> contacts = new List<Contact>();
+
 
         // GET: api/Contacts
         /// <summary>
@@ -30,6 +32,8 @@ namespace HelloWorldService.Controllers
         }
 
         // GET: api/Contacts/5
+        [Route("customers/{id}/orders")]
+        [HttpGet]
         public HttpResponseMessage Get(int id)
         {
             var contact = contacts.SingleOrDefault(t => t.Id == id);
