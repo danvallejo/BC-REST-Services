@@ -38,13 +38,33 @@ namespace HelloWorldClient
         Mobile,
     }
 
+    public class TokenResponse
+    {
+        public string Token { get; set; }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost/helloworldservice/api/");
-            client.DefaultRequestHeaders.Add("Api-Key", "value");
+
+            var tokenRequest = new
+            {
+               UserName = "dan",
+               Password = "password"
+            };
+
+            var jsonToken = JsonConvert.SerializeObject(tokenRequest);
+            var tokenContent = new StringContent(jsonToken, System.Text.Encoding.UTF8, "application/json");
+            var tokenResult = client.PostAsync("token", tokenContent).Result;
+
+            var jsonResult = tokenResult.Content.ReadAsStringAsync().Result;
+
+            var token = JsonConvert.DeserializeObject<TokenResponse>(jsonResult);
+
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.Token);
 
             var newContact = new Contact
             {

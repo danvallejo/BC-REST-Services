@@ -9,6 +9,11 @@ namespace HelloWorldService
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
+            if (actionExecutedContext.Exception is HttpResponseException)
+            {
+                throw actionExecutedContext.Exception;
+            }
+
             var response = new
             {
                 Status = "error",
