@@ -18,6 +18,12 @@ namespace HelloWorldService.Controllers
     {
         public static List<Contact> contacts = new List<Contact>();
 
+        private IContactRepository contactRepository;
+
+        public ContactsController(IContactRepository contactRepository)
+        {
+            this.contactRepository = contactRepository;
+        }
 
         // GET: api/Contacts
         /// <summary>
@@ -30,7 +36,7 @@ namespace HelloWorldService.Controllers
         {
             //int x = 1;
             //x = x / (x - 1);
-            return contacts;
+            return contactRepository.Contacts;
         }
 
         // GET: api/Contacts/5
