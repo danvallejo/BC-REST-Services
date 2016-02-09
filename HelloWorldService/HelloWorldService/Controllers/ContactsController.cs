@@ -13,7 +13,7 @@ namespace HelloWorldService.Controllers
     /// </summary>
     [System.Web.Http.Cors.EnableCors(origins: "*", headers: "*", methods: "*")]
    // [Authenticator]
-    [RoutePrefix("router")]
+    [RoutePrefix("api/contacts")]
     public class ContactsController : ApiController
     {
         public static List<Contact> contacts = new List<Contact>();
@@ -24,6 +24,8 @@ namespace HelloWorldService.Controllers
         /// This is the get function
         /// </summary>
         /// <returns></returns>
+        [Route]
+        [HttpGet]
         public IEnumerable<Contact> Get()
         {
             //int x = 1;
@@ -32,7 +34,7 @@ namespace HelloWorldService.Controllers
         }
 
         // GET: api/Contacts/5
-        [Route("customers/{id}/orders")]
+        [Route("{id}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
@@ -59,6 +61,8 @@ namespace HelloWorldService.Controllers
         static int nextId = 101;
 
         // POST: api/Contacts
+        [Route]
+        [HttpPost]
         public HttpResponseMessage Post([FromBody]Contact value)
         {
             if (value == null)
@@ -86,6 +90,8 @@ namespace HelloWorldService.Controllers
         }
 
         // PUT: api/Contacts/5
+        [HttpPut]
+        [Route("{id}")]
         public void Put(int id, [FromBody]Contact value)
         {
             var contact = contacts.SingleOrDefault(t => t.Id == id);
@@ -99,6 +105,8 @@ namespace HelloWorldService.Controllers
         }
 
         // DELETE: api/Contacts/5
+        [HttpDelete]
+        [Route("{id}")]
         public HttpResponseMessage Delete(int id)
         {
             var contact = contacts.SingleOrDefault(t => t.Id == id);
