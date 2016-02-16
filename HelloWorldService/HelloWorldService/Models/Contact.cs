@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace HelloWorldService.Models
 {
-    public class Contact
+    public class ModelContact
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -24,20 +24,20 @@ namespace HelloWorldService.Models
         public DateTime DateAdded { get; set; }
 
         [JsonProperty("phones", DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public Phone[] Phones { get; set; }
+        public ModelPhone[] Phones { get; set; }
     }
 
-    public class Phone
+    public class ModelPhone
     {
         [JsonProperty("number", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Number { get; set; }
 
         [JsonProperty("phone_type")]
         [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PhoneType PhoneType { get; set; }
+        public ModelPhoneType PhoneType { get; set; }
     }
 
-    public enum PhoneType
+    public enum ModelPhoneType
     {
         Unknown,
         Home,

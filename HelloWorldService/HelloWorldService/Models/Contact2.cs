@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HelloWorldService.Models
 {
-    public class Contact2 : Contact
+    public class Contact2 : ModelContact
     {
         [JsonProperty("age")]
         public int Age { get; set; }

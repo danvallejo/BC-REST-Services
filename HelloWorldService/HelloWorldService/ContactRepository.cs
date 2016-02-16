@@ -8,21 +8,19 @@ namespace HelloWorldService
 {
     public interface IContactRepository
     {
-        IEnumerable<Contact> Contacts { get; }
+        IEnumerable<Models.ModelContact> Contacts { get; }
 
-        Contact GetById(int id);
+        Models.ModelContact GetById(int id);
 
-        void Add(Contact value);
+        int Add(Models.ModelContact value);
 
-        void UpdateById(int id, Contact value);
+        void UpdateById(int id, Models.ModelContact value);
 
         bool DeleteById(int id);
     }
 
     public class ContactRepository : IContactRepository
     {
-        private static int nextId = 101;
-        private static List<Contact> contacts = new List<Contact>();
         private ContactsEntities db;
 
         public ContactRepository()
@@ -31,42 +29,77 @@ namespace HelloWorldService
             db.Database.Connection.Open();
         }
 
-        public IEnumerable<Contact> Contacts
+        public IEnumerable<Models.ModelContact> Contacts
         {
             get
             {
-                return contacts;
+                return db.Contacts.Select(t =>
+                    new Models.ModelContact
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    DateAdded = t.DateAdded
+                });
             }
         }
 
-        public Contact GetById(int id)
+        public Models.ModelContact GetById(int id)
         {
-            return contacts.SingleOrDefault(t => t.Id == id);
-        }
+            var entity = db.Contacts.SingleOrDefault(t => t.Id == id);
 
-        public void Add(Contact value)
-        {
-            value.Id = nextId++;
-            contacts.Add(value);
-        }
-        
-        public void UpdateById(int id, Contact value)
-        {
-            var contact = GetById(id);
-
-            if (contact != null)
+            if (entity == null)
             {
-                contact.Name = value.Name;
+                return null;
+            }
+
+            return new Models.ModelContact
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    DateAdded = entity.DateAdded
+                };
+        }
+
+        public int Add(Models.ModelContact value)
+        {
+            var entity = new Contact
+            {
+                Id = value.Id,
+                Name = value.Name,
+                DateAdded = DateTime.UtcNow
+            };
+            db.Contacts.Add(entity);
+
+            db.SaveChanges();
+
+            return entity.Id;
+        }
+
+        public void UpdateById(int id, Models.ModelContact value)
+        {
+            var entity = db.Contacts.SingleOrDefault(t => t.Id == id);
+
+            if (entity != null)
+            {
+                entity.Name = value.Name;
                 //contact.Phones = value.Phones;
-                contact.DateAdded = value.DateAdded;
+
+                db.SaveChanges();
             }
         }
 
         public bool DeleteById(int id)
         {
-            var itemsRemoved = contacts.RemoveAll(t => t.Id == id);
+            var entity = db.Contacts.SingleOrDefault(t => t.Id == id);
+            if (entity == null)
+            {
+                return false;
+            }
 
-            return (itemsRemoved > 0);
+            db.Contacts.Remove(entity);
+            db.SaveChanges();
+
+            return true;
         }
     }
 }

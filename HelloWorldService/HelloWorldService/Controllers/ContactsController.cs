@@ -30,7 +30,7 @@ namespace HelloWorldService.Controllers
         /// <returns></returns>
         [Route]
         [HttpGet]
-        public IEnumerable<Contact> Get()
+        public IEnumerable<Models.ModelContact> Get()
         {
             //int x = 1;
             //x = x / (x - 1);
@@ -67,7 +67,7 @@ namespace HelloWorldService.Controllers
         // POST: api/Contacts
         [Route]
         [HttpPost]
-        public HttpResponseMessage Post([FromBody]Contact value)
+        public HttpResponseMessage Post([FromBody]Models.ModelContact value)
         {
             if (value == null)
             {
@@ -77,9 +77,9 @@ namespace HelloWorldService.Controllers
                 };
             }
           
-            contactRepository.Add(value);
+            var contactId = contactRepository.Add(value);
 
-            var result = new { Id = value.Id, HasCandy = true };
+            var result = new { Id = contactId, HasCandy = true };
 
             var newJson = JsonConvert.SerializeObject(result);
 
@@ -95,7 +95,7 @@ namespace HelloWorldService.Controllers
         // PUT: api/Contacts/5
         [HttpPut]
         [Route("{id}")]
-        public void Put(int id, [FromBody]Contact value)
+        public void Put(int id, [FromBody]Models.ModelContact value)
         {
             contactRepository.UpdateById(id, value);
         }
