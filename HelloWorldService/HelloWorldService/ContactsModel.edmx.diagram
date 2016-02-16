@@ -6,6 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="1e3bc509fbb04a3388739f43b68bd234" Name="Diagram1">
         <EntityTypeShape EntityType="ContactsModel.Contact" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContactsModel.ContactPhone" Width="1.5" PointX="4.5" PointY="1.25" />
+        <AssociationConnector Association="ContactsModel.FK_ContactPhone_Contact" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

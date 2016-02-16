@@ -113,7 +113,12 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AuthenticatorAttribute.cs" />
-    <Compile Include="Contact.cs" />
+    <Compile Include="Contact.cs">
+      <DependentUpon>ContactsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ContactPhone.cs">
+      <DependentUpon>ContactsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ContactRepository.cs" />
     <Compile Include="ContactsModel.Context.cs">
       <AutoGen>True</AutoGen>

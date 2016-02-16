@@ -12,17 +12,13 @@ namespace HelloWorldService
     using System;
     using System.Collections.Generic;
     
-    public partial class Contact
+    public partial class ContactPhone
     {
-        public Contact()
-        {
-            this.ContactPhones = new HashSet<ContactPhone>();
-        }
+        public int PhoneId { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PhoneType { get; set; }
+        public int ContactId { get; set; }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public System.DateTime DateAdded { get; set; }
-    
-        public virtual ICollection<ContactPhone> ContactPhones { get; set; }
+        public virtual Contact Contact { get; set; }
     }
 }

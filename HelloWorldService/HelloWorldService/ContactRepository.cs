@@ -33,13 +33,36 @@ namespace HelloWorldService
         {
             get
             {
-                return db.Contacts.Select(t =>
-                    new Models.ModelContact
+                var contacts = new List<Models.ModelContact>();
+
+                foreach (var contact in db.Contacts)
                 {
-                    Id = t.Id,
-                    Name = t.Name,
-                    DateAdded = t.DateAdded
-                });
+                    var modelContact = new Models.ModelContact
+                    {
+                        Id = contact.Id,
+                        Name = contact.Name,
+                        DateAdded = contact.DateAdded
+                    };
+
+                    var modelPhones = new List<Models.ModelPhone>();
+                    foreach (var phone in contact.ContactPhones)
+                    {
+                        modelPhones.Add(new Models.ModelPhone 
+                        {
+                            Number = phone.PhoneNumber,
+                            PhoneType = (Models.ModelPhoneType)Enum.Parse(typeof(Models.ModelPhoneType), phone.PhoneType)
+                        });
+                    }
+
+                    if (modelPhones.Any())
+                    {
+                        modelContact.Phones = modelPhones.ToArray();
+                    }
+
+                    contacts.Add(modelContact);
+                }
+
+                return contacts;
             }
         }
 
@@ -68,6 +91,19 @@ namespace HelloWorldService
                 Name = value.Name,
                 DateAdded = DateTime.UtcNow
             };
+
+            if (value.Phones != null)
+            {
+                foreach (var phone in value.Phones)
+                {
+                    entity.ContactPhones.Add(new ContactPhone
+                    {
+                        PhoneNumber = phone.Number,
+                        PhoneType = phone.PhoneType.ToString()
+                    });
+                }
+            }
+
             db.Contacts.Add(entity);
 
             db.SaveChanges();
