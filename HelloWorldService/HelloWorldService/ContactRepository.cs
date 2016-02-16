@@ -23,6 +23,13 @@ namespace HelloWorldService
     {
         private static int nextId = 101;
         private static List<Contact> contacts = new List<Contact>();
+        private ContactsEntities db;
+
+        public ContactRepository()
+        {
+            db = new ContactsEntities();
+            db.Database.Connection.Open();
+        }
 
         public IEnumerable<Contact> Contacts
         {
@@ -50,7 +57,7 @@ namespace HelloWorldService
             if (contact != null)
             {
                 contact.Name = value.Name;
-                contact.Phones = value.Phones;
+                //contact.Phones = value.Phones;
                 contact.DateAdded = value.DateAdded;
             }
         }
