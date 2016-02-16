@@ -16,8 +16,6 @@ namespace HelloWorldService.Controllers
     [RoutePrefix("api/contacts")]
     public class ContactsController : ApiController
     {
-        public static List<Contact> contacts = new List<Contact>();
-
         private IContactRepository contactRepository;
 
         public ContactsController(IContactRepository contactRepository)
@@ -44,7 +42,7 @@ namespace HelloWorldService.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var contact = contacts.SingleOrDefault(t => t.Id == id);
+            var contact = contactRepository.GetById(id);
             if (contact == null)
             {
                 return new HttpResponseMessage
@@ -64,7 +62,7 @@ namespace HelloWorldService.Controllers
             };
         }
 
-        static int nextId = 101;
+       
 
         // POST: api/Contacts
         [Route]
@@ -78,9 +76,8 @@ namespace HelloWorldService.Controllers
                     StatusCode = HttpStatusCode.BadRequest
                 };
             }
-
-            value.Id = nextId++;
-            contacts.Add(value);
+          
+            contactRepository.Add(value);
 
             var result = new { Id = value.Id, HasCandy = true };
 
@@ -100,14 +97,7 @@ namespace HelloWorldService.Controllers
         [Route("{id}")]
         public void Put(int id, [FromBody]Contact value)
         {
-            var contact = contacts.SingleOrDefault(t => t.Id == id);
-
-            if (contact != null)
-            {
-                contact.Name = value.Name;
-                contact.Phones = value.Phones;
-                contact.DateAdded = value.DateAdded;
-            }
+            contactRepository.UpdateById(id, value);
         }
 
         // DELETE: api/Contacts/5
@@ -115,16 +105,15 @@ namespace HelloWorldService.Controllers
         [Route("{id}")]
         public HttpResponseMessage Delete(int id)
         {
-            var contact = contacts.SingleOrDefault(t => t.Id == id);
-            if (contact == null)
+            var deleted = contactRepository.DeleteById(id);
+
+            if (!deleted)
             {
                 return new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.NotFound
                 };
             }
-
-            contacts.RemoveAll(t => t.Id == id);
 
             return new HttpResponseMessage
             {
